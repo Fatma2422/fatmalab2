@@ -1,4 +1,4 @@
-name: Hello World Workflow
+name: Two-Job Hello World Workflow
 
 on:
   push:
@@ -6,11 +6,17 @@ on:
       - master
 
 jobs:
-  say-hello:
+  job-one:
+    name: First Job
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Print Hello from Job One
+        run: echo "Hello from Job One!"
 
-      - name: Print Hello World
-        run: echo "Hello World"
+  job-two:
+    name: Second Job
+    needs: job-one # This ensures Job 2 only runs after Job 1 completes successfully
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Hello from Job Two
+        run: echo "Hello World from Job Two!"
